@@ -14,7 +14,7 @@ from sklearn.metrics import (
 )
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
-from utils import load_dataset, save_model
+from utils import load_dataset, save_model, get_class_names, get_feature_descriptions
 
 def main(args):
     # W&B init
@@ -59,13 +59,18 @@ def main(args):
     df = load_dataset()
     
     # Dataset validation
+    class_names = get_class_names()
+    feature_descriptions = get_feature_descriptions()
+    
     dataset_info = {
         "total_samples": len(df),
         "features": list(df.columns[:-1]),
         "target_classes": sorted(df["target"].unique()),
+        "class_names": class_names,
         "class_distribution": df["target"].value_counts().to_dict(),
         "missing_values": df.isnull().sum().sum(),
-        "duplicate_rows": df.duplicated().sum()
+        "duplicate_rows": df.duplicated().sum(),
+        "feature_descriptions": feature_descriptions
     }
     
     print(f"Dataset loaded: {dataset_info['total_samples']} samples, {len(dataset_info['features'])} features")
@@ -215,6 +220,8 @@ def main(args):
             "cv_std": metrics["cv_std"],
             "features": dataset_info["features"],
             "target_classes": dataset_info["target_classes"],
+            "class_names": dataset_info["class_names"],
+            "feature_descriptions": dataset_info["feature_descriptions"],
             "timestamp": datetime.now().isoformat(),
             "hyperparameters": {
                 "test_size": args.test_size,
