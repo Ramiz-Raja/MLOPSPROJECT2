@@ -15,8 +15,16 @@ def main(args):
     wandb_api_key = os.getenv("WANDB_API_KEY")
     if not wandb_api_key:
         raise RuntimeError("WANDB_API_KEY must be set in environment")
+    
+    # Trim whitespace from API key to prevent common copy-paste issues
+    wandb_api_key = wandb_api_key.strip()
+    if not wandb_api_key:
+        raise RuntimeError("WANDB_API_KEY is empty after trimming whitespace")
+    
     wandb_entity = os.getenv("WANDB_ENTITY", None)
-    wandb_project = os.getenv("WANDB_PROJECT", "mlops-capstone")
+    if wandb_entity:
+        wandb_entity = wandb_entity.strip()
+    wandb_project = os.getenv("WANDB_PROJECT", "mlops-capstone").strip()
     
     print(f"Initializing W&B with project: {wandb_project}, entity: {wandb_entity}")
 

@@ -15,6 +15,7 @@ Go to your GitHub repository → Settings → Secrets and variables → Actions 
   2. Scroll down to "API keys" section
   3. Copy your API key
 - **Value**: Your W&B API key (starts with something like `a1b2c3d4...`)
+- **⚠️ Important**: Make sure there are no leading or trailing spaces when copying the key!
 
 #### `WANDB_ENTITY` (Optional)
 - **Description**: Your W&B username or team name
@@ -88,15 +89,21 @@ After adding the secrets, you can test your setup by:
    - Make sure you've added the `WANDB_API_KEY` secret
    - Check that the API key is valid and not expired
 
-2. **"W&B login failed"**
+2. **"API key cannot start or end with whitespace"**
+   - This is the most common issue! Your API key has leading/trailing spaces
+   - **Solution**: Go to GitHub Secrets → Edit `WANDB_API_KEY` → Remove any spaces at the beginning or end
+   - Copy the key again from W&B settings and paste it carefully
+
+3. **"W&B login failed"**
    - Verify your API key is correct
    - Check that your W&B account is active
+   - Ensure no whitespace in the API key
 
-3. **"Docker build failed"**
+4. **"Docker build failed"**
    - Check Docker Hub credentials if using Docker Hub
    - Verify Dockerfile syntax
 
-4. **"Render deploy failed"**
+5. **"Render deploy failed"**
    - Verify Render API key and service ID
    - Check that your Render service is properly configured
 

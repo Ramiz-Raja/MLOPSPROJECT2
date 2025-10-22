@@ -35,15 +35,22 @@ jobs:
             echo "ERROR: WANDB_API_KEY secret is not set" >&2
             exit 1
           fi
-          echo "WANDB_API_KEY is configured"
-          echo "WANDB_ENTITY=$WANDB_ENTITY" >> $GITHUB_ENV
-          echo "WANDB_PROJECT=$WANDB_PROJECT" >> $GITHUB_ENV
-          echo "WANDB_API_KEY=$WANDB_API_KEY" >> $GITHUB_ENV
+          
+          # Trim whitespace from all W&B variables
+          WANDB_API_KEY_TRIMMED=$(echo "$WANDB_API_KEY" | xargs)
+          WANDB_ENTITY_TRIMMED=$(echo "$WANDB_ENTITY" | xargs)
+          WANDB_PROJECT_TRIMMED=$(echo "$WANDB_PROJECT" | xargs)
+          
+          if [ -z "$WANDB_API_KEY_TRIMMED" ]; then
+            echo "ERROR: WANDB_API_KEY is empty after trimming whitespace" >&2
+            exit 1
+          fi
+          
+          echo "WANDB_API_KEY is configured (length: ${#WANDB_API_KEY_TRIMMED})"
+          echo "WANDB_ENTITY=$WANDB_ENTITY_TRIMMED" >> $GITHUB_ENV
+          echo "WANDB_PROJECT=$WANDB_PROJECT_TRIMMED" >> $GITHUB_ENV
+          echo "WANDB_API_KEY=$WANDB_API_KEY_TRIMMED" >> $GITHUB_ENV
 
       - name: Run training
-        env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-          WANDB_ENTITY: ${{ secrets.WANDB_ENTITY }}
-          WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
         run: |
           python src/train.py --output-dir ./artifacts
