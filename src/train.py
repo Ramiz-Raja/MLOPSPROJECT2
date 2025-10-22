@@ -130,9 +130,26 @@ def main(args):
         
         # Model complexity
         "n_features": len(X.columns),
-        "n_classes": len(np.unique(y)),
-        "model_params": model.get_params()
+        "n_classes": len(np.unique(y))
     }
+    
+    # Add serializable model parameters only
+    model_params = model.get_params()
+    serializable_params = {}
+    for key, value in model_params.items():
+        try:
+            # Test if the value is JSON serializable
+            import json
+            json.dumps(value)
+            serializable_params[key] = value
+        except (TypeError, ValueError):
+            # Skip non-serializable objects (like sklearn estimators)
+            if isinstance(value, str) or isinstance(value, (int, float, bool)) or value is None:
+                serializable_params[key] = value
+            else:
+                serializable_params[key] = str(type(value).__name__)
+    
+    metrics["model_params"] = serializable_params
     
     # ROC-AUC for multiclass (one-vs-rest)
     try:
