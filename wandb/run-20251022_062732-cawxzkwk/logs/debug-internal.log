@@ -1,0 +1,12 @@
+{"time":"2025-10-22T06:27:34.8949157-07:00","level":"INFO","msg":"stream: starting","core version":"0.22.2"}
+{"time":"2025-10-22T06:27:35.4231545-07:00","level":"INFO","msg":"stream: created new stream","id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:35.4237568-07:00","level":"INFO","msg":"handler: started","stream_id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:35.425424-07:00","level":"INFO","msg":"stream: started","id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:35.425424-07:00","level":"INFO","msg":"sender: started","stream_id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:35.425424-07:00","level":"INFO","msg":"writer: started","stream_id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:42.2411463-07:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading artifact iris-logreg-model","runtime_seconds":2.2344792},{"desc":"updating run metadata","runtime_seconds":0.0036114}],"total_operations":2}}
+{"time":"2025-10-22T06:27:43.3420618-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-10-22T06:27:43.8919943-07:00","level":"INFO","msg":"stream: closing","id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:43.8919943-07:00","level":"INFO","msg":"handler: closed","stream_id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:43.898145-07:00","level":"INFO","msg":"sender: closed","stream_id":"cawxzkwk"}
+{"time":"2025-10-22T06:27:43.898145-07:00","level":"INFO","msg":"stream: closed","id":"cawxzkwk"}

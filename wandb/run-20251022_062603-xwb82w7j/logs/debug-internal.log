@@ -1,0 +1,15 @@
+{"time":"2025-10-22T06:26:06.375743-07:00","level":"INFO","msg":"stream: starting","core version":"0.22.2"}
+{"time":"2025-10-22T06:26:07.2978515-07:00","level":"INFO","msg":"stream: created new stream","id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:07.298905-07:00","level":"INFO","msg":"handler: started","stream_id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:07.3119571-07:00","level":"INFO","msg":"stream: started","id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:07.3136932-07:00","level":"INFO","msg":"sender: started","stream_id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:07.313621-07:00","level":"INFO","msg":"writer: started","stream_id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:07.591822-07:00","level":"ERROR","msg":"HTTP error","status":401,"method":"POST","url":"https://api.wandb.ai/graphql"}
+{"time":"2025-10-22T06:26:07.5989823-07:00","level":"ERROR","msg":"runupserter: failed to init run","error":"returned error 401: {\"data\":{\"upsertBucket\":null},\"errors\":[{\"message\":\"user is not logged in\",\"path\":[\"upsertBucket\"],\"extensions\":{\"code\":\"PERMISSION_ERROR\"}}]}"}
+{"time":"2025-10-22T06:26:07.9826172-07:00","level":"INFO","msg":"stream: closing","id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:07.9857054-07:00","level":"ERROR","msg":"sender: uploadConfigFile: runupserter: run not yet initialized"}
+{"time":"2025-10-22T06:26:08.0547735-07:00","level":"ERROR","msg":"runfiles: runupserter: run not yet initialized"}
+{"time":"2025-10-22T06:26:08.0557721-07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-10-22T06:26:08.0557721-07:00","level":"INFO","msg":"handler: closed","stream_id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:08.0557721-07:00","level":"INFO","msg":"sender: closed","stream_id":"xwb82w7j"}
+{"time":"2025-10-22T06:26:08.0557721-07:00","level":"INFO","msg":"stream: closed","id":"xwb82w7j"}

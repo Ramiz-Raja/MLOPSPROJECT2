@@ -1,0 +1,15 @@
+2025-10-22 06:26:03,826 INFO    MainThread:1536 [wandb_setup.py:_flush():81] Current SDK version is 0.22.2
+2025-10-22 06:26:03,827 INFO    MainThread:1536 [wandb_setup.py:_flush():81] Configure stats pid to 1536
+2025-10-22 06:26:03,827 INFO    MainThread:1536 [wandb_setup.py:_flush():81] Loading settings from C:\Users\Rameez Raja\.config\wandb\settings
+2025-10-22 06:26:03,827 INFO    MainThread:1536 [wandb_setup.py:_flush():81] Loading settings from D:\MLOPSPROJECT2\mlops-capstone\wandb\settings
+2025-10-22 06:26:03,827 INFO    MainThread:1536 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2025-10-22 06:26:03,828 INFO    MainThread:1536 [wandb_init.py:setup_run_log_directory():705] Logging user logs to D:\MLOPSPROJECT2\mlops-capstone\wandb\run-20251022_062603-xwb82w7j\logs\debug.log
+2025-10-22 06:26:03,829 INFO    MainThread:1536 [wandb_init.py:setup_run_log_directory():706] Logging internal logs to D:\MLOPSPROJECT2\mlops-capstone\wandb\run-20251022_062603-xwb82w7j\logs\debug-internal.log
+2025-10-22 06:26:03,829 INFO    MainThread:1536 [wandb_init.py:init():832] calling init triggers
+2025-10-22 06:26:03,829 INFO    MainThread:1536 [wandb_init.py:init():837] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-10-22 06:26:03,829 INFO    MainThread:1536 [wandb_init.py:init():880] starting backend
+2025-10-22 06:26:06,290 INFO    MainThread:1536 [wandb_init.py:init():883] sending inform_init request
+2025-10-22 06:26:06,370 INFO    MainThread:1536 [wandb_init.py:init():891] backend started and connected
+2025-10-22 06:26:06,372 INFO    MainThread:1536 [wandb_init.py:init():961] updated telemetry
+2025-10-22 06:26:06,374 INFO    MainThread:1536 [wandb_init.py:init():985] communicating run to backend with 90.0 second timeout
