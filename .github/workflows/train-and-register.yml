@@ -25,6 +25,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r src/requirements.txt
 
+      - name: Normalize W&B secret names
+        run: |
+          echo "Checking for alternative W&B secret names..."
+          # If WANDB_API_KEY not set but a secret named WANDBAPIKEY exists, map it
+          if [ -z "${WANDB_API_KEY}" ] && [ "${{ secrets.WANDBAPIKEY }}" != "" ]; then
+            echo "WANDB_API_KEY=${{ secrets.WANDBAPIKEY }}" >> $GITHUB_ENV
+            echo "Mapped secrets.WANDBAPIKEY -> WANDB_API_KEY"
+          fi
+
       - name: Check W&B secrets
         run: |
           if [ -z "${WANDB_API_KEY}" ]; then
