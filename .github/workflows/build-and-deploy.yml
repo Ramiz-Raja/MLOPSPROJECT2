@@ -25,14 +25,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (GHCR)
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/mlops-capstone:latest
-            ${{ env.DOCKERHUB_REPO }}:latest
 
       - name: Log in to Docker Hub
         if: ${{ secrets.DOCKERHUB_USERNAME && secrets.DOCKERHUB_TOKEN }}
@@ -42,7 +41,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Push to Docker Hub (fallback if tags include docker hub repo)
+      - name: Build and push Docker image (Docker Hub)
         if: ${{ secrets.DOCKERHUB_USERNAME && secrets.DOCKERHUB_TOKEN }}
         uses: docker/build-push-action@v5
         with:
