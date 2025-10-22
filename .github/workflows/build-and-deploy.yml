@@ -14,7 +14,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_USERNAME && format('{0}/{1}', secrets.DOCKERHUB_USERNAME, 'mlops-capstone') || '' }}
+      # Prefer an explicit DOCKERHUB_REPO secret (e.g. 'username/repo').
+      # Otherwise fall back to DOCKERHUB_USERNAME/mlopsproject2.
+      DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_REPO || (secrets.DOCKERHUB_USERNAME && format('{0}/{1}', secrets.DOCKERHUB_USERNAME, 'mlopsproject2')) }}
     steps:
       - uses: actions/checkout@v4
 
