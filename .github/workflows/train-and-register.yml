@@ -8,6 +8,10 @@ on:
 jobs:
   train:
     runs-on: ubuntu-latest
+    env:
+      WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+      WANDB_ENTITY: ${{ secrets.WANDB_ENTITY }}
+      WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
     steps:
       - uses: actions/checkout@v4
 
@@ -21,18 +25,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r src/requirements.txt
 
-      - name: Set W&B env
-        env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-          WANDB_ENTITY: ${{ secrets.WANDB_ENTITY }}
-          WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
+      - name: Check W&B secrets
         run: |
-          echo "WANDB configured"
+          if [ -z "${WANDB_API_KEY}" ]; then
+            echo "ERROR: WANDB_API_KEY secret is not set in this repository. Please add it to GitHub Secrets." >&2
+            exit 1
+          fi
+          echo "WANDB secrets appear to be set"
 
       - name: Run training
-        env:
-          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-          WANDB_ENTITY: ${{ secrets.WANDB_ENTITY }}
-          WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
         run: |
           python src/train.py --output-dir ./artifacts
