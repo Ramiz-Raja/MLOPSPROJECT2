@@ -8,10 +8,6 @@ on:
 jobs:
   train:
     runs-on: ubuntu-latest
-    env:
-      WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
-      WANDB_ENTITY: ${{ secrets.WANDB_ENTITY }}
-      WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
     steps:
       - uses: actions/checkout@v4
 
@@ -25,22 +21,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r src/requirements.txt
 
-      - name: Normalize W&B secret names
+      - name: Sanitize and export W&B API key
         run: |
-          echo "Checking for alternative W&B secret names..."
-          # If WANDB_API_KEY not set but a secret named WANDBAPIKEY exists, map it
-          if [ -z "${WANDB_API_KEY}" ] && [ "${{ secrets.WANDBAPIKEY }}" != "" ]; then
-            echo "WANDB_API_KEY=${{ secrets.WANDBAPIKEY }}" >> $GITHUB_ENV
-            echo "Mapped secrets.WANDBAPIKEY -> WANDB_API_KEY"
-          fi
-
-      - name: Check W&B secrets
-        run: |
-          if [ -z "${WANDB_API_KEY}" ]; then
-            echo "ERROR: WANDB_API_KEY secret is not set in this repository. Please add it to GitHub Secrets." >&2
+          echo "Sanitizing W&B API key..."
+          WANDB_API_KEY_RAW='${{ secrets.WANDB_API_KEY }}'
+          WANDB_API_KEY=$(python - <<'PY'
+import os
+print(os.environ.get('WANDB_API_KEY_RAW','').strip())
+PY
+)
+          if [ -z "$WANDB_API_KEY" ]; then
+            echo "ERROR: WANDB_API_KEY is empty after trimming" >&2
             exit 1
           fi
-          echo "WANDB secrets appear to be set"
+          # Mask key in logs and export to GITHUB_ENV
+          echo "::add-mask::$WANDB_API_KEY"
+          echo "WANDB_API_KEY=$WANDB_API_KEY" >> $GITHUB_ENV
+          echo "WANDB_ENTITY=${{ secrets.WANDB_ENTITY }}" >> $GITHUB_ENV
+          echo "WANDB_PROJECT=${{ secrets.WANDB_PROJECT }}" >> $GITHUB_ENV
 
       - name: Run training
         run: |
