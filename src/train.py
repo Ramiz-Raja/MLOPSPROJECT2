@@ -17,6 +17,8 @@ def main(args):
         raise RuntimeError("WANDB_API_KEY must be set in environment")
     wandb_entity = os.getenv("WANDB_ENTITY", None)
     wandb_project = os.getenv("WANDB_PROJECT", "mlops-capstone")
+    
+    print(f"Initializing W&B with project: {wandb_project}, entity: {wandb_entity}")
 
     run = wandb.init(project=wandb_project, entity=wandb_entity, job_type="train")
     run.config.update(vars(args))

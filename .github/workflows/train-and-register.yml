@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'src/**'
+      - '.github/workflows/train-and-register.yml'
+  workflow_dispatch:
 
 jobs:
   train:
@@ -21,25 +25,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r src/requirements.txt
 
-      - name: Sanitize and export W&B API key
+      - name: Configure W&B
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_ENTITY: ${{ secrets.WANDB_ENTITY }}
+          WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
         run: |
-          echo "Sanitizing W&B API key..."
-          WANDB_API_KEY_RAW='${{ secrets.WANDB_API_KEY }}'
-          WANDB_API_KEY=$(python - <<'PY'
-import os
-print(os.environ.get('WANDB_API_KEY_RAW','').strip())
-PY
-)
           if [ -z "$WANDB_API_KEY" ]; then
-            echo "ERROR: WANDB_API_KEY is empty after trimming" >&2
+            echo "ERROR: WANDB_API_KEY secret is not set" >&2
             exit 1
           fi
-          # Mask key in logs and export to GITHUB_ENV
-          echo "::add-mask::$WANDB_API_KEY"
+          echo "WANDB_API_KEY is configured"
+          echo "WANDB_ENTITY=$WANDB_ENTITY" >> $GITHUB_ENV
+          echo "WANDB_PROJECT=$WANDB_PROJECT" >> $GITHUB_ENV
           echo "WANDB_API_KEY=$WANDB_API_KEY" >> $GITHUB_ENV
-          echo "WANDB_ENTITY=${{ secrets.WANDB_ENTITY }}" >> $GITHUB_ENV
-          echo "WANDB_PROJECT=${{ secrets.WANDB_PROJECT }}" >> $GITHUB_ENV
 
       - name: Run training
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_ENTITY: ${{ secrets.WANDB_ENTITY }}
+          WANDB_PROJECT: ${{ secrets.WANDB_PROJECT }}
         run: |
           python src/train.py --output-dir ./artifacts
